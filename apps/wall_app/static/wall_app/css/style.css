@@ -1,0 +1,46 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+#red{
+  background-color: red;
+}
+#green{
+  background-color: green;
+}
+.header{
+  display: block;
+  width: auto;
+  height: 70px;
+  border: 2px solid black;
+  margin-bottom: 50px;
+}
+.top_h1{
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.top_p{
+  display: inline-block;
+  margin-left: 400px;
+  font-size: 30px;
+  margin-right: 90px;
+}
+#post_msg{
+  margin-left: 970px;
+  margin-top: 20px;
+}
+.delete1{
+  margin-bottom: 25px;
+  margin-left: 25px;
+}
+.delete2{
+  margin-bottom: 25px;
+  margin-left: 95px;
+}
+.messages_text{
+  margin-left: 30px;
+}
+.comment_text{
+  margin-left: 100px;
+}

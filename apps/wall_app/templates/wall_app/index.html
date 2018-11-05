@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>The Wall</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'wall_app/css/style.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 class='top_h1'>CodingDojo Wall</h1>
+        <p class='top_p'>Welcome {{request.session.name}}</p>
+        <a class='top_a' href="/reset">Log Off</a>
+      </div>
+      <form action="/wall/message" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1"><b>Post a message</b></label>
+          <textarea class="form-control" name='message' id="exampleFormControlTextarea1" rows="3"></textarea>
+
+          <input type="hidden" name="msg_id" value={{message.id}}>
+          <input class="btn btn-primary mb-2" id='post_msg' type="submit" value="Post a message">
+        </div>
+      </form>
+      <div class="messages_box">
+          <div class="messages">
+          {% for message in messages reversed%}
+            <b>{{message.user.first_name}} {{message.user.last_name}} {{message.user.created_at}}</b><br><br>
+            <p class='messages_text'>{{message.message}}</p><br>
+            {% if request.session.login_id == message.user.id %}
+            <form class='delete1' action="/wall/delete" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary mb-2" id='red' type="submit" value="Delete Post">
+            </form>
+            {% endif %}
+            {% for x in message.message_comment.all %}
+                <p class='comment_text'><b>{{x.user_msg.first_name}} {{x.user_msg.last_name}} {{x.created_at}}</b><br><br>
+                {{x.comment}}</p><br>
+                {% if request.session.login_id == message.user.id %}
+                <form class='delete2' action="/wall/delete" method="post">
+                  {% csrf_token %}
+                  <input class="btn btn-primary mb-2" id='red' type="submit" value="Delete Comment">
+                </form>
+                {% endif %}
+            {% endfor %}
+            <form class='comment' action="/wall/comment" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Post a comment</label>
+                <textarea class="form-control" name='comment' id="exampleFormControlTextarea1" rows="3"></textarea>
+                <input type="hidden" name="comment_id" value={{message.id}}>
+                <input class="btn btn-primary mb-2" id='green' type="submit" value="Post a comment">
+              </div>
+            </form>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

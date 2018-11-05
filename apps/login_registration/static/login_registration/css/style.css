@@ -1,0 +1,16 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+.error{
+  color: red;
+  margin-top: 50px;
+  font-size: 30px;
+}
+#logout{
+  display: inline-block;
+}
+#go{
+  display: inline-block;
+  margin-left: 200px;
+}
